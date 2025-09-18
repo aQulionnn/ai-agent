@@ -1,21 +1,28 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.SemanticKernel;
+using MyAiAgent.Data;
 
 namespace MyAiAgent.Controllers;
 
 [Route("api/java")]
 [ApiController]
-public class JavaController(Kernel kernel) 
-    : ControllerBase
+public class JavaController(Kernel kernel) : ControllerBase
 {
     private readonly Kernel _kernel = kernel;
-    private readonly KernelPlugin _prompts = kernel.ImportPluginFromPromptDirectory("Prompts/JavaPlugins");
 
     [HttpPost("roadmap")]
     public async Task<IActionResult> GenerateRoadmap([FromBody] RoadmapRequest request)
     {
-        var response = await _kernel.InvokeAsync<string>(_prompts["GetRoadmap"], new() {{ "input", request.Input }});
-        
+        var prompts = _kernel.Plugins["JavaPlugins"];
+        var response = await _kernel.InvokeAsync<string>(prompts["GenerateRoadmap"], new() {{ "input", request.Input }});
+        return Ok(response);
+    }
+
+    [HttpPost("roadmap/structured")]
+    public async Task<IActionResult> GenerateRoadmapFromLearningTopics([FromServices] AppDbContext context)
+    {
+        var prompts = _kernel.Plugins["JavaPlugins"];
+        var response = await _kernel.InvokeAsync<string>(prompts["GenerateRoadmapFromLearningTopics"], new() { { "context", context } });
         return Ok(response);
     }
 }

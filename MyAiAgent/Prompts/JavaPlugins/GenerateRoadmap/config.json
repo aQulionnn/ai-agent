@@ -4,8 +4,8 @@
   "description": "Provides a beginner roadmap for learning Java programming language.",
   "execution_settings": {
     "default": {
-      "max_tokens": 50,
-      "temperature": 0
+      "max_tokens": 100,
+      "temperature": 0.5
     }
   },
   "input_variables": [

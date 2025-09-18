@@ -1,9 +1,14 @@
 ﻿using DotNetEnv;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.SemanticKernel;
+using MyAiAgent.Data;
+using MyAiAgent.Prompts.JavaPlugins.GenerateRoadmapFromLearningTopics;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
+
+builder.Services.AddDbContext<AppDbContext>(options => options.UseInMemoryDatabase("Database"));
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -12,7 +17,7 @@ builder.Services.AddSingleton(sp =>
 {
     Env.Load();
     
-    var kernel = Kernel.CreateBuilder()
+    var kernelBuilder = Kernel.CreateBuilder()
         .AddAzureOpenAIChatCompletion(
             Environment.GetEnvironmentVariable("AZURE_OPENAI_DEPLOYMENT_NAME")
                 ?? throw new InvalidOperationException("AZURE_OPENAI_DEPLOYMENT_NAME environment variable is required"),
@@ -24,7 +29,12 @@ builder.Services.AddSingleton(sp =>
                 ?? throw new InvalidOperationException("AZURE_OPENAI_API_KEY environment variable is required")
         );
     
-    return kernel.Build();
+    var kernel = kernelBuilder.Build();
+    
+    kernel.ImportPluginFromPromptDirectory("Prompts/JavaPlugins");
+    kernel.ImportPluginFromType<RoadmapPlugin>();
+    
+    return kernel;
 });
 
 var app = builder.Build();

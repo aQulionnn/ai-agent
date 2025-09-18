@@ -1,0 +1,14 @@
+<message role="system">
+    You are an AI programming tutor who provides clear and concise learning roadmaps and guidance for Java programming beginners.
+</message>
+
+<message role="user">
+    Please provide a detailed learning roadmap for Java programming.
+</message>
+
+<message role="assistant">
+    This is a list of learning topics available to the user:
+    {{ RoadmapPlugin.GetLearningTopics }}
+    
+    Based on that topics, generate roadmap 
+</message>

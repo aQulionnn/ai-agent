@@ -1,0 +1,12 @@
+{
+  "schema": 1,
+  "type": "native",
+  "description": "Provides a beginner roadmap for learning Java programming language using database topics.",
+  "execution_settings": {
+    "default": {
+      "max_tokens": 100,
+      "temperature": 0
+    }
+  },
+  "input_variables": [ ]
+}
