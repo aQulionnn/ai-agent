@@ -1,36 +1,39 @@
 ﻿using DotNetEnv;
 using Microsoft.SemanticKernel;
-using Microsoft.SemanticKernel.ChatCompletion;
-using Microsoft.SemanticKernel.Plugins.Core;
 
-Env.Load(Path.Combine(AppContext.BaseDirectory, @"..\..\..\.env"));
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddControllers();
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+builder.Services.AddSingleton(sp =>
+{
+    Env.Load();
     
-var builder = Kernel.CreateBuilder()
-    .AddAzureOpenAIChatCompletion(
-        Environment.GetEnvironmentVariable("AZURE_OPENAI_DEPLOYMENT_NAME") 
-            ?? throw new InvalidOperationException("AZURE_OPENAI_DEPLOYMENT_NAME environment variable is required"),
+    var kernel = Kernel.CreateBuilder()
+        .AddAzureOpenAIChatCompletion(
+            Environment.GetEnvironmentVariable("AZURE_OPENAI_DEPLOYMENT_NAME")
+                ?? throw new InvalidOperationException("AZURE_OPENAI_DEPLOYMENT_NAME environment variable is required"),
+            
+            Environment.GetEnvironmentVariable("AZURE_OPENAI_ENDPOINT")
+                ?? throw new InvalidOperationException("AZURE_OPENAI_ENDPOINT environment variable is required"),
+            
+            Environment.GetEnvironmentVariable("AZURE_OPENAI_API_KEY")
+                ?? throw new InvalidOperationException("AZURE_OPENAI_API_KEY environment variable is required")
+        );
+    
+    return kernel.Build();
+});
 
-        Environment.GetEnvironmentVariable("AZURE_OPENAI_ENDPOINT")
-            ?? throw new InvalidOperationException("AZURE_OPENAI_ENDPOINT environment variable is required"),
+var app = builder.Build();
 
-        Environment.GetEnvironmentVariable("AZURE_OPENAI_API_KEY")
-            ?? throw new InvalidOperationException("AZURE_OPENAI_API_KEY environment variable is required")
-    );
+app.UseSwagger();
+app.UseSwaggerUI();
 
-var kernel = builder.Build();
+app.UseHttpsRedirection();
 
-kernel.ImportPluginFromType<ConversationSummaryPlugin>();
+app.MapControllers();
 
-var prompts = kernel.ImportPluginFromPromptDirectory("Prompts/JavaPlugins");
-
-ChatHistory history = [];
-
-string input = @"Я хочу научиться программировать на Java";
-
-var response = await kernel.InvokeAsync<string>(prompts["GetRoadmap"], new() {{ "input", input }});
-
-Console.WriteLine(response);
-
-history.AddUserMessage(input);
-history.AddAssistantMessage(response ?? "");
-
+app.Run();
