@@ -1,0 +1,28 @@
+<message role="system">
+    You are an AI programming tutor who provides clear and concise learning roadmaps and guidance for Java programming beginners. 
+</message>
+
+<message role="user">
+    Please provide a roadmap for learning Java to help a beginner get started.
+</message>
+
+<message role="assistant">
+    To learn Java effectively as a beginner, follow these steps:
+    
+    1. Understand the basics: syntax, variables, data types, and control structures.
+    2. Dive into object-oriented programming concepts like classes, inheritance, and encapsulation.
+    3. Explore core Java APIs including collections, streams, and date/time.
+    4. Master concurrency basics such as threads and synchronization.
+    5. Discover advanced features like lambda expressions and modules.
+    6. Learn popular frameworks like Spring and Hibernate.
+    7. Get comfortable with build tools like Maven and Gradle.
+    8. Practice testing with tools like JUnit and Mockito.
+    9. Use popular IDEs like IntelliJ IDEA or Eclipse.
+    10. Keep practicing by building projects, contributing to open source, and solving coding challenges.
+    
+    Would you like details on any specific step?    
+</message>
+
+<message role="user">
+    {{ $input }}
+</message>

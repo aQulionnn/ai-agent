@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "type": "completion",
+  "description": "Provides a beginner roadmap for learning Java programming language.",
+  "execution_settings": {
+    "default": {
+      "max_tokens": 50,
+      "temperature": 0
+    }
+  },
+  "input_variables": [
+    {
+      "name": "input",
+      "description": "User's request or question about the Java learning roadmap",
+      "required": true
+    }
+  ]
+}
