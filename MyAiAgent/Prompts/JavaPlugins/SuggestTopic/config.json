@@ -1,0 +1,12 @@
+{
+  "schema": 1,
+  "type": "completion",
+  "description": "Suggests a topic to the user",
+  "execution_settings": {
+    "default": {
+      "max_tokens": 100,
+      "temperature": 0
+    }
+  },
+  "input_variables": [ ]
+}

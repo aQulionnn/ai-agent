@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.SemanticKernel;
-using MyAiAgent.Data;
+using Microsoft.SemanticKernel.ChatCompletion;
+using Microsoft.SemanticKernel.Connectors.OpenAI;
 
 namespace MyAiAgent.Controllers;
 
@@ -11,7 +12,7 @@ public class JavaController(Kernel kernel) : ControllerBase
     private readonly Kernel _kernel = kernel;
 
     [HttpPost("roadmap")]
-    public async Task<IActionResult> GenerateRoadmap([FromBody] RoadmapRequest request)
+    public async Task<IActionResult> GenerateRoadmap([FromBody] GenerateRoadmapRequest request)
     {
         var prompts = _kernel.Plugins["JavaPlugins"];
         var response = await _kernel.InvokeAsync<string>(prompts["GenerateRoadmap"], new() {{ "input", request.Input }});
@@ -19,12 +20,33 @@ public class JavaController(Kernel kernel) : ControllerBase
     }
 
     [HttpPost("roadmap/structured")]
-    public async Task<IActionResult> GenerateRoadmapFromLearningTopics([FromServices] AppDbContext context)
+    public async Task<IActionResult> GenerateRoadmapFromTopics()
     {
         var prompts = _kernel.Plugins["JavaPlugins"];
-        var response = await _kernel.InvokeAsync<string>(prompts["GenerateRoadmapFromLearningTopics"], new() { { "context", context } });
+        var response = await _kernel.InvokeAsync<string>(prompts["GenerateRoadmapFromTopics"]);
         return Ok(response);
+    }
+
+    [HttpPost("topic")]
+    public async Task<IActionResult> SuggestTopic()
+    {
+        var chatCompletionService = _kernel.GetRequiredService<IChatCompletionService>();
+        
+        var history = new ChatHistory();
+        history.AddUserMessage("Based on the user's learned topics, suggest a topic");
+        
+        var openAiPromptExecutionSettings = new OpenAIPromptExecutionSettings
+        {
+            FunctionChoiceBehavior = FunctionChoiceBehavior.Auto()
+        };
+        
+        var result = await chatCompletionService.GetChatMessageContentAsync(
+            history,
+            executionSettings: openAiPromptExecutionSettings,
+            kernel: _kernel);
+
+        return Ok(result);
     }
 }
 
-public record RoadmapRequest(string Input);
+public record GenerateRoadmapRequest(string Input);

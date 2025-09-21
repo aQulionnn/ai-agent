@@ -10,34 +10,47 @@ public class AppDbContext : DbContext
         Seed();
     }
     
-    public DbSet<LearningTopic>  LearningTopics { get; set; }
+    public DbSet<Topic> Topics { get; set; }
+    public DbSet<LearnedTopic> LearnedTopics { get; set; }
 
     private void Seed()
     {
-        if (!LearningTopics.Any())
+        if (!Topics.Any())
         {
-            LearningTopics.AddRange(
-                new LearningTopic
+            Topics.AddRange(
+                new Topic
                 {
                     Id = 1,
                     Title = "Java Basics",
                     Description = "Syntax, variables, data types, operators, and control flow",
                     Order = 1
                 },
-                new LearningTopic
+                new Topic
                 {
                     Id = 2,
                     Title = "Object-Oriented Programming",
                     Description = "Classes, objects, inheritance, polymorphism, encapsulation",
                     Order = 2    
                 },
-                new LearningTopic
+                new Topic
                 {
                     Id = 3,
                     Title = "Collections and Generics",
                     Description = "Lists, sets, maps, iterators, and generic programming",
                     Order = 3    
                 });
+        }
+
+        if (!LearnedTopics.Any())
+        {
+            LearnedTopics.AddRange(
+                new LearnedTopic
+                {
+                    Id = 1,
+                    Title = "Java Basics",
+                    Description = "Syntax, variables, data types, operators, and control flow",
+                }
+            );
         }
         
         SaveChanges();

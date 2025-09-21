@@ -1,6 +1,6 @@
 namespace MyAiAgent.Models;
 
-public class LearningTopic
+public class Topic
 {
     public int Id { get; init; }
     public string Title  { get; set; } = String.Empty;

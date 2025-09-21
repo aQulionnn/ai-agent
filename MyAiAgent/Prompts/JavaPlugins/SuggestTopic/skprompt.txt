@@ -1,0 +1,4 @@
+Based on the user's learned topics:
+{{ LearnedTopicsPlugin.GetLearnedTopics }} 
+
+Suggest a topic.

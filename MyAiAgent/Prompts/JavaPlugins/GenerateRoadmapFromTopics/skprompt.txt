@@ -7,8 +7,8 @@
 </message>
 
 <message role="assistant">
-    This is a list of learning topics available to the user:
-    {{ RoadmapPlugin.GetLearningTopics }}
+    This is a list of topics available to the user:
+    {{ TopicsPlugin.get_topics }}
     
     Based on that topics, generate roadmap 
 </message>
