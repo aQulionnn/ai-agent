@@ -11,7 +11,10 @@
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.9"/>
         <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="9.0.9"/>
         <PackageReference Include="Microsoft.SemanticKernel" Version="1.65.0"/>
+        <PackageReference Include="Microsoft.SemanticKernel.Connectors.AzureAISearch" Version="1.45.0-preview" />
+        <PackageReference Include="Microsoft.SemanticKernel.Connectors.AzureOpenAI" Version="1.65.0" />
         <PackageReference Include="Microsoft.SemanticKernel.Plugins.Core" Version="1.65.0-preview"/>
+        <PackageReference Include="Microsoft.SemanticKernel.Plugins.Memory" Version="1.65.0-alpha" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.4"/>
     </ItemGroup>
 
