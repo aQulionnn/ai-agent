@@ -18,6 +18,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<TopicsPlugin>();
 builder.Services.AddScoped<LearnedTopicsPlugin>();
+builder.Services.AddScoped<PlatonusPlugin>();
 
 #pragma warning disable
 
@@ -48,6 +49,9 @@ builder.Services.AddScoped<Kernel>(serviceProvider =>
     
     var learnedTopicsPlugin = serviceProvider.GetRequiredService<LearnedTopicsPlugin>();
     kernel.ImportPluginFromObject(learnedTopicsPlugin, "LearnedTopicsPlugin");
+    
+    var platonusPlugin = serviceProvider.GetRequiredService<PlatonusPlugin>();
+    kernel.ImportPluginFromObject(platonusPlugin, "PlatonusPlugin");
     
     return kernel;
 });
