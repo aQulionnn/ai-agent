@@ -1,0 +1,7 @@
+Suggests a list of online courses for each discipline provided.
+
+Student's schedule:
+{{ PlatonusPlugin.get_schedule sid=$sid token=$token }}
+
+Output format:
+Discipline: Course Name - URL

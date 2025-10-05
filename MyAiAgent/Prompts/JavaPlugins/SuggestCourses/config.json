@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "type": "native",
+  "description": "Suggests a list of online courses for each discipline provided.",
+  "execution_settings": {
+    "default": {
+      "max_tokens": 200,
+      "temperature": 0
+    }
+  },
+  "input_variables": [
+    {
+      "name": "sid",
+      "description": "Session ID from login",
+      "required": true
+    },
+    {
+      "name": "token",
+      "description": "Authentication token from login",
+      "required": true
+    }
+  ]
+}

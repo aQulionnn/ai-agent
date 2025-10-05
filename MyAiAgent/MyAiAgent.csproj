@@ -40,6 +40,13 @@
         <None Update="Prompts\JavaPlugins\SuggestTopic\skprompt.txt">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </None>
+
+        <None Update="Prompts\JavaPlugins\PrioritizeDisciplines\config.json">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="Prompts\JavaPlugins\PrioritizeDisciplines\skprompt.txt">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
     </ItemGroup>
 
     <ItemGroup>

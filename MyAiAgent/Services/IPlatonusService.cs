@@ -1,3 +1,4 @@
+using MyAiAgent.Controllers;
 using Refit;
 
 namespace MyAiAgent.Services;
@@ -5,7 +6,7 @@ namespace MyAiAgent.Services;
 public interface IPlatonusService
 {
     [Post("/rest/api/login")]
-    Task<HttpContent> Login([Body] LoginRequest request);
+    Task<LoginResponse> Login([Body] LoginRequest request);
 
     [Post("/rest/schedule/userSchedule/student/initial/0/ru")]
     Task<HttpContent> GetSchedule([Header("Sid")] string sid, [Header("Token")] string token);

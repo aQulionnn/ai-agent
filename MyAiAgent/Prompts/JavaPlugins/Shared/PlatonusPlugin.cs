@@ -9,22 +9,22 @@ public class PlatonusPlugin
 {
     private readonly IPlatonusService _platonusService = RestService.For<IPlatonusService>("https://aiu.c-platonus.kz");
 
-    [KernelFunction("login")]
-    [Description("Login to Platonus with credentials")]
-    public async Task<string> Login(string password, string iin = "")
-    {
-        var request = new LoginRequest
-        {
-            AuthForDeductedStudentsAndGraduates = false,
-            IcNumber = iin,
-            Iin = iin,
-            Login = null,
-            Password = password
-        };
-        
-        var response = await _platonusService.Login(request);
-        return await response.ReadAsStringAsync();
-    }
+    // [KernelFunction("login")]
+    // [Description("Login to Platonus with credentials")]
+    // public async Task<string> Login(string password, string iin = "")
+    // {
+    //     var request = new LoginRequest
+    //     {
+    //         AuthForDeductedStudentsAndGraduates = false,
+    //         IcNumber = iin,
+    //         Iin = iin,
+    //         Login = null,
+    //         Password = password
+    //     };
+    //     
+    //     var response = await _platonusService.Login(request);
+    //     return await response.ReadAsStringAsync();
+    // }
     
     [KernelFunction("get_schedule")]
     [Description("Fetch user schedule")]
